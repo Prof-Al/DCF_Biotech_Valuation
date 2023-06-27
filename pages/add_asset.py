@@ -922,7 +922,7 @@ def licensing_details_card():
                                                     [
                                                         dash_table.DataTable(
                                                             columns=[
-                                                                dict(id='upto', name="Upto ($)", type='numeric', format=money),
+                                                                dict(id='upto_royalty', name="Upto ($)", type='numeric', format=money),
                                                                 dict(id='royalty_percent', name="Royalty (%)", type='numeric', format=percentage)
                                                                 ],
                                                             row_deletable=True,

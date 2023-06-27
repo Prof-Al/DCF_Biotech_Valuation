@@ -224,26 +224,25 @@ def royalty_computation(royalty_table, sales):
     if type(sales) not in (int, float):
         return sales
     # if no royalty table has been provided
-    if len(royalty_table) == 1 and len(royalty_table[0]) == 2:
+    if len(royalty_table) == 1:
         return sales
-
     royalty = 0
     remaining_sales = sales
 
     for i, tier in enumerate(royalty_table):
         if i == len(royalty_table) - 1:
-            royalty += (sales - tier[3]) * tier[2]
+            royalty += (sales - tier["upto_royalty"]) * tier["royalty_percent"]
         else:
-            if sales <= tier[3]:
-                royalty += remaining_sales * tier[2]
+            if sales <= tier["upto_royalty"]:
+                royalty += remaining_sales * tier["royalty_percent"]
                 break
             else:
                 if i == 0:
-                    royalty += tier[3] * tier[2]
-                    remaining_sales -= tier[3]
+                    royalty += tier["upto_royalty"] * tier["royalty_percent"]
+                    remaining_sales -= tier["upto_royalty"]
                 else:
-                    royalty += (tier[3] - royalty_table[i - 1][3]) * tier[2]
-                    remaining_sales -= (tier[3] - royalty_table[i - 1][3])
+                    royalty += (tier["upto_royalty"] - royalty_table[i - 1]["upto_royalty"]) * tier["royalty_percent"]
+                    remaining_sales -= (tier["upto_royalty"] - royalty_table[i - 1]["upto_royalty"])
 
     return royalty
 
@@ -286,8 +285,8 @@ def update_royalty_table(asset_name, regions, separated):
         return [], [], dash.no_update, {"display": "none"}
 
     asset_data = assets_collection.find_one({"name": asset_name})
-    r_table = royalty_tiers_collection.find({"AssetID": asset_data["_id"]})
-    royalty_table = [[value for value in document.values()] for document in r_table]
+    royalty_table = list(royalty_tiers_collection.find({"AssetID": asset_data["_id"]}))
+    # royalty_table = [[value for value in document.values()] for document in r_table]
 
     df = get_net_sales(asset_name, regions, separated)
     df = df.applymap(lambda x: royalty_computation(royalty_table, x))
@@ -329,8 +328,7 @@ def update_total_revenue_table(asset_name, royalty_regions):
         return [], [], dash.no_update, dash.no_update, {"display": "none"}
 
     asset_data = assets_collection.find_one({"name": asset_name})
-    r_table = royalty_tiers_collection.find({"AssetID": asset_data["_id"]})
-    royalty_table = [[value for value in document.values()] for document in r_table]
+    royalty_table = list(royalty_tiers_collection.find({"AssetID": asset_data["_id"]}))
 
     df = get_net_sales(asset_name, default_regions, True)
     df_filtered = df.loc[royalty_regions]
