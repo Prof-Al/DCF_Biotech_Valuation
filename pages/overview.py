@@ -484,6 +484,6 @@ def update_npv_table(data):
 )
 def toggle_card_visibility(switch_value):
     if switch_value:
-        return {"display": "block"}, *([{"display": "block"}] * 2)
+        return {"display": "block"}, {"display": "block"}, {"display": "block"}
     else:
-        return {"display": "none"}, *([{"display": "none"}] * 2)
+        return {"display": "none"}, {"display": "none"}, {"display": "none"}
