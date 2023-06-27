@@ -19,6 +19,8 @@ dash.register_page(
     description="Overview financial valuation of an asset in portfolio",
 )
 
+
+assets_df = get_collection_as_df("assets")
 assets_collection = get_collection("assets")
 patient_schedule_collection = get_collection("patients_schedule")
 development_milestones_collection = get_collection("development_milestones")
@@ -33,7 +35,7 @@ asset_selector = dbc.Card(
         [
             html.H5("Search Database", className="card-title"),
             dcc.Dropdown(
-                options=list(get_collection_as_df("assets")),
+                options=list(get_collection_as_df("assets")["name"]),
                 multi=False,
                 placeholder="Select an asset",
                 clearable=True,
