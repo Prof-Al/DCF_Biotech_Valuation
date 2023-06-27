@@ -89,6 +89,7 @@ licensing_card = dbc.Card(
                                                      name="(Est) Year of Achievement", type='numeric'),
                                             ],
                                             row_deletable=True,
+                                            style_table={'overflowX': 'scroll'},
                                             data=[{}],
                                             editable=True,
                                             style_cell={'whiteSpace': 'normal'},
@@ -113,6 +114,7 @@ licensing_card = dbc.Card(
                                                      name="Amount ($)", type='numeric', format=money)
                                             ],
                                             row_deletable=True,
+                                            style_table={'overflowX': 'scroll'},
                                             data=[{}],
                                             editable=True,
                                             style_cell={'whiteSpace': 'normal'},
@@ -135,6 +137,7 @@ licensing_card = dbc.Card(
                                                 dict(id='royalty_percent', name="Royalty (%)", type='numeric', format=percentage)
                                                 ],
                                             row_deletable=True,
+                                            style_table={'overflowX': 'scroll'},
                                             data=[{}],
                                             editable=True,
                                             style_cell={'whiteSpace': 'normal'},
@@ -213,6 +216,7 @@ def update_asset_info_card(asset_name):
                 {'Property': 'Europe', 'Value': pe_eur},
                 {'Property': 'Rest of World', 'Value': pe_row}
             ],
+            style_table={'overflowX': 'scroll'},
             columns=[
                 {'name': 'Property', 'id': 'Property'},
                 {'name': 'Patent Expiry', 'id': 'Value'}
@@ -231,6 +235,7 @@ def update_asset_info_card(asset_name):
                 {'Region': 'Europe', 'Patient Population': pp_eur},
                 {'Region': 'Rest of World', 'Patient Population': pp_row}
             ],
+            style_table={'overflowX': 'scroll'},
             columns=[
                 {'name': 'Region', 'id': 'Region'},
                 {'name': 'Patient Population', 'id': 'Patient Population'}
@@ -249,6 +254,7 @@ def update_asset_info_card(asset_name):
                 {'Region': 'Europe', 'Pricing': pricing_eur},
                 {'Region': 'Rest of World', 'Pricing': pricing_row}
             ],
+            style_table={'overflowX': 'scroll'},
             columns=[
                 {'name': 'Region', 'id': 'Region'},
                 {'name': 'Pricing', 'id': 'Pricing', "type": 'numeric', "format": money}

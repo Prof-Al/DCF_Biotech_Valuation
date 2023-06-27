@@ -66,6 +66,7 @@ net_sales_card = dbc.Card(
             ),
             dash_table.DataTable(
                 id="net_sales_table",
+                style_table={'overflowX': 'scroll'},
             ),
             html.Div(id='net_sales_graph_container', style={'display': 'none'}),
 
@@ -93,6 +94,7 @@ royalty_card = dbc.Card(
             ),
             dash_table.DataTable(
                 id="royalty_table",
+                style_table={'overflowX': 'scroll'},
             ),
             html.Div(id='royalty_graph_container', style={'display': 'none'}),
 
@@ -109,6 +111,7 @@ total_revenues_card = dbc.Card(
             html.Br(),
             dash_table.DataTable(
                 id="total_revenue_table",
+                style_table={'overflowX': 'scroll'},
             ),
             html.Div(id='total_revenue_graph_container', style={'display': 'none'}),
         ]
@@ -123,6 +126,7 @@ npv_card = dbc.Card(
             html.Br(),
             dash_table.DataTable(
                 id="npv_table",
+                style_table={'overflowX': 'scroll'},
             ),
             html.Br(),
             html.H6(id="npv_value"),

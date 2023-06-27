@@ -596,6 +596,7 @@ def patient_details_card():
                                 html.Br(),
                                 dash_table.DataTable(
                                     id="patient_schedule_us",
+                                    style_table={'overflowX': 'scroll'},
                                 ),
                                 html.Br(),
                                 html.Div(id='patient_schedule_us_chart_container', style={'display': 'none'}),
@@ -694,6 +695,7 @@ def patient_details_card():
                                 html.Br(),
                                 dash_table.DataTable(
                                     id="patient_schedule_eur",
+                                    style_table={'overflowX': 'scroll'},
                                 ),
                                 html.Br(),
                                 html.Div(id='patient_schedule_eur_chart_container', style={'display': 'none'}),
@@ -792,6 +794,7 @@ def patient_details_card():
                                 html.Br(),
                                 dash_table.DataTable(
                                     id="patient_schedule_row",
+                                    style_table={'overflowX': 'scroll'},
                                 ),
                                 html.Br(),
                                 html.Div(id='patient_schedule_row_chart_container', style={'display': 'none'}),
@@ -880,6 +883,7 @@ def licensing_details_card():
                                                                      name="(Est) Year of Achievement", type='numeric'),
                                                             ],
                                                             row_deletable=True,
+                                                            style_table={'overflowX': 'scroll'},
                                                             data=[{}],
                                                             editable=True,
                                                             style_cell={'whiteSpace': 'normal'},
@@ -904,6 +908,7 @@ def licensing_details_card():
                                                                      name="Amount ($)", type='numeric', format=money)
                                                             ],
                                                             row_deletable=True,
+                                                            style_table={'overflowX': 'scroll'},
                                                             data=[{}],
                                                             editable=True,
                                                             style_cell={'whiteSpace': 'normal'},
@@ -926,6 +931,7 @@ def licensing_details_card():
                                                                 dict(id='royalty_percent', name="Royalty (%)", type='numeric', format=percentage)
                                                                 ],
                                                             row_deletable=True,
+                                                            style_table={'overflowX': 'scroll'},
                                                             data=[{}],
                                                             editable=True,
                                                             style_cell={'whiteSpace': 'normal'},
