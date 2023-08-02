@@ -1,6 +1,5 @@
 import dash
-import pymongo
-import pandas as pd
+from utils import *
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
@@ -16,12 +15,6 @@ dash.register_page(
     name="Global Parameters",
     description="Displays global parameters affecting all assets",
 )
-
-# connect to mongodb
-client = pymongo.MongoClient(
-    "mongodb+srv://dcf_admin:DnP3vf0EUD81mzHx@dcf-webapp.xsqti7v.mongodb.net/?retryWrites=true&w=majority")
-db = client["dcf_valuation"]
-collection = db["global_params"]
 
 
 def global_param_card():
@@ -265,7 +258,7 @@ def layout():
           Input('interval_db', component_property='n_intervals')
           )
 def populate_global_params(n_intervals):
-    df = pd.DataFrame(list(collection.find()))
+    df = pd.DataFrame(list(get_collection("global_params").find()))
     df['_id'] = df['_id'].astype(str)
     return df["base_currency"][0], df["display_currency"][0], df["discount_rate"][0], df["tax_rate"][0], \
         df["generics_discount"][0], df["sales_margin"][0], df["bear_scenario"][0], df["bull_scenario"][0]
@@ -282,11 +275,11 @@ def populate_global_params(n_intervals):
           Input('bull_case', component_property='value')
           )
 def update_db(b_curr, d_curr, dr, tr, gd, sm, bear, bull):
-    df = pd.DataFrame(list(collection.find()))
+    df = pd.DataFrame(list(get_collection("global_params").find()))
     df['_id'] = df['_id'].astype(str)
     id = df['_id'][0]
     print(b_curr, d_curr, dr, tr, gd, sm)
-    collection.update_one(
+    get_collection("global_params").update_one(
         {"_id": ObjectId(id)},
         {"$set": {"base_currency": b_curr,
                   "display_currency": d_curr,

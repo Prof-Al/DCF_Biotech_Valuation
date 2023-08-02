@@ -124,9 +124,12 @@ npv_card = dbc.Card(
         [
             html.H5("Net Present Value"),
             html.Br(),
-            dash_table.DataTable(
-                id="npv_table",
-                style_table={'overflowX': 'scroll'},
+            dcc.Loading(
+                id="npv_table_loading",
+                children=dash_table.DataTable(
+                    id="npv_table",
+                    style_table={'overflowX': 'scroll'},
+                ),
             ),
             html.Br(),
             html.H6(id="npv_value"),
@@ -228,7 +231,7 @@ def royalty_computation(royalty_table, sales):
     if type(sales) not in (int, float):
         return sales
     # if no royalty table has been provided
-    if len(royalty_table) == 1:
+    if not royalty_table:
         return sales
     royalty = 0
     remaining_sales = sales
@@ -489,3 +492,4 @@ def toggle_card_visibility(switch_value):
         return {"display": "block"}, {"display": "block"}, {"display": "block"}
     else:
         return {"display": "none"}, {"display": "none"}, {"display": "none"}
+
