@@ -235,7 +235,7 @@ def royalty_computation(royalty_table, sales):
         return sales
     royalty = 0
     remaining_sales = sales
-
+    print(royalty_table)
     for i, tier in enumerate(royalty_table):
         if i == len(royalty_table) - 1:
             royalty += (sales - tier["upto_royalty"]) * tier["royalty_percent"]
@@ -460,7 +460,6 @@ def update_npv_table(data):
 
     new_df = pd.DataFrame([after_tax], index=[f"After Tax - {global_params['tax_rate']}%"], columns=df.columns)
     df = pd.concat([df, new_df])
-    print(df)
 
     df = df.replace(np.nan, 0)
     years = df.columns
@@ -468,8 +467,7 @@ def update_npv_table(data):
     present_values = df.iloc[2, :] / (1 + (global_params["discount_rate"] / 100)) ** periods
     npv = float(present_values.sum())
     df.loc['Present Value'] = present_values
-    print(df)
-    print(format_to_millions(npv))
+
 
     fig = px.line(df.transpose())
     fig.update_layout(
@@ -493,3 +491,10 @@ def toggle_card_visibility(switch_value):
     else:
         return {"display": "none"}, {"display": "none"}, {"display": "none"}
 
+# Updates assets in search database dropdown
+@callback(
+    dash.dependencies.Output('financial_asset_selector', 'options'),
+    [dash.dependencies.Input('financial_asset_selector', 'value')]
+)
+def update_asset_dropdown(name):
+    return [{'label': i, 'value': i} for i in list(get_collection_as_df("assets")["name"])]

@@ -968,7 +968,6 @@ def licensing_details_card():
 
 
 def layout():
-    print("layoutttttttttttttttttttttttttt")
 
     page = dbc.Container(
         [
@@ -980,7 +979,6 @@ def layout():
 
         ]
     )
-    print("returnedddd")
     return page
 
 
@@ -1403,6 +1401,7 @@ def update_patient_chart_row(data, clicks):
 def add_asset(clicks, name, success, pe_us, pe_eur, pe_row, pp_us, pp_eur, pp_row,
               pricing_us, pricing_eur, pricing_row, ps_us, ps_eur, ps_row, dm, sm, r):
     print(name, success, pe_us, pe_eur, pe_row, pp_us, pp_eur, pp_row, pricing_us, pricing_eur, pricing_row)
+    print(dm, sm, r)
     if None in [name, success, pe_us, pe_eur, pe_row, pp_us, pp_eur, pp_row, pricing_us, pricing_eur, pricing_row]:
         return True, "Missing Values", html.P("Please fill all data fields."), "danger", *([no_update] * 30)
     main_data = {
@@ -1431,22 +1430,24 @@ def add_asset(clicks, name, success, pe_us, pe_eur, pe_row, pp_us, pp_eur, pp_ro
     patient_schedule_collection.insert_many(patient_schedule_data)
 
     dm_data = dm
-    for record in dm_data:
-        record['AssetID'] = ObjectId(main_table_id)
-    print(dm_data)
-    development_milestones_collection.insert_many(dm_data)
+    if dm_data != [{}]:
+        for record in dm_data:
+            record['AssetID'] = ObjectId(main_table_id)
+        development_milestones_collection.insert_many(dm_data)
 
     sm_data = sm
-    for record in sm_data:
-        record['AssetID'] = ObjectId(main_table_id)
-    print(sm_data)
-    sales_milestones_collection.insert_many(sm_data)
+    if sm_data != [{}]:
+        for record in sm_data:
+            record['AssetID'] = ObjectId(main_table_id)
+        sales_milestones_collection.insert_many(sm_data)
 
     r_data = r
-    for record in r_data:
-        record['AssetID'] = ObjectId(main_table_id)
-    print(r_data)
-    royalty_tiers_collection.insert_many(r_data)
+    if r_data != [{}]:
+        for record in r_data:
+            record['AssetID'] = ObjectId(main_table_id)
+        royalty_tiers_collection.insert_many(r_data)
+    refresh_db()
+    print()
 
     return True, "Asset Added", html.P(f"Asset '{name}' has been successfully added to the database."), \
         "primary", *([""] * 27), *([[{}]] * 3)
